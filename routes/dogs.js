@@ -26,7 +26,7 @@ router.get('/find/:id', async (req, res, next) => {
   }
 })
 
-router.get('/find/:breed', async (req, res, next) => {
+router.get('/find/breed/:breed', async (req, res, next) => {
   const breed = req.params.breed
   const limit = Number(req.query.limit) || 20
 
