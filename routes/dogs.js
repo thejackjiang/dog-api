@@ -22,6 +22,17 @@ router.get('/find/:id', async (req, res, next) => {
   }
 })
 
+router.get('/find/:breed', async (req, res, next) => {
+  const breed = req.params.breed
+  try {
+    const dogs = await Dog.find({ breed })
+    res.json(dogs)
+  } catch (err) {
+    next(err)
+  }
+})
+
+
 router.post('/create', async (req, res, next) => {
   const newDoc = req.body
   try {
