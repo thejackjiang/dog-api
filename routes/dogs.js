@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
+
 const express = require('express')
 const router = express.Router();
 
@@ -15,7 +18,7 @@ router.get('/findAll', async (req, res, next) => {
 router.get('/find/:id', async (req, res, next) => {
   const _id = req.params.id
   try {
-    const dogs = await Dog.find({ _id })
+    const dogs = await Dog.findOne({ _id })
     res.json(dogs)
   } catch (err) {
     next(err)
@@ -32,11 +35,14 @@ router.get('/find/:breed', async (req, res, next) => {
   }
 })
 
-
 router.post('/create', async (req, res, next) => {
   const newDoc = req.body
+  const newDog = new Dog({
+    _id: new ObjectId(),
+    ...newDoc
+  });
   try {
-    await Dog.create(newDoc)
+    await newDog.save()
     res.sendStatus(201)
   } catch (err) {
     next(err)
