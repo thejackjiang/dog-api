@@ -9,6 +9,12 @@
       "request": "launch",
       "name": "start",
       "program": "${workspaceFolder}/server.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "active",
+      "program": "${file}"
     }
   ]
 }

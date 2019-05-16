@@ -7,8 +7,9 @@ const router = express.Router();
 const { Dog } = require('../models/index')
 
 router.get('/findAll', async (req, res, next) => {
+  const limit = Number(req.query.limit) || 20
   try {
-    const dogs = await Dog.find({})
+    const dogs = await Dog.find({}).limit(limit)
     res.json(dogs)
   } catch (err) {
     next(err)
@@ -27,8 +28,10 @@ router.get('/find/:id', async (req, res, next) => {
 
 router.get('/find/:breed', async (req, res, next) => {
   const breed = req.params.breed
+  const limit = Number(req.query.limit) || 20
+
   try {
-    const dogs = await Dog.find({ breed })
+    const dogs = await Dog.find({ breed }).limit(limit)
     res.json(dogs)
   } catch (err) {
     next(err)
@@ -37,10 +40,7 @@ router.get('/find/:breed', async (req, res, next) => {
 
 router.post('/create', async (req, res, next) => {
   const newDoc = req.body
-  const newDog = new Dog({
-    _id: new ObjectId(),
-    ...newDoc
-  });
+  const newDog = new Dog(newDoc);
   try {
     await newDog.save()
     res.sendStatus(201)
