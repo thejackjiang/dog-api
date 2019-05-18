@@ -40,7 +40,10 @@ router.get('/find/breed/:breed', async (req, res, next) => {
 
 router.post('/create', async (req, res, next) => {
   const newDoc = req.body
-  const newDog = new Dog(newDoc);
+  const newDog = new Dog({
+    _id: new mongoose.Types.ObjectId(),
+    ...newDoc
+  });
   try {
     await newDog.save()
     res.sendStatus(201)
